@@ -1,0 +1,769 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</head>
+<body>
+<title>冯契学术成就陈列室</title>
+<meta name="description" content="华东师范大学冯契学术成就陈列室 3D 导览：环绕玻璃圆楼，走进序厅、人物前言与五个展陈单元的实景。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap&text=%E5%86%AF%E5%A5%91%E5%AD%A6%E6%9C%AF%E6%88%90%E5%B0%B1%E9%99%88%E5%88%97%E5%AE%A4%E6%99%BA%E6%85%A7">
+<style>
+/* Layout: split hero (thesis | live 3D model of the glass rotunda) → 9 exhibit zones along the visiting route → 智慧说 system → life timeline → legacy.
+   Motif: the exhibit panels' crimson 3D numerals sitting on a long red rule, and the dot-ended divider lines (●——●) under each panel's text. */
+:root{
+  --bg:#f4f3f0; --panel:#ffffff; --panel-2:#ebe8e2; --line:rgba(32,30,28,.12); --line-2:rgba(32,30,28,.24);
+  --fg:#1f1d1b; --muted:#5f5b55; --dim:#8b867e;
+  --crimson:#9b1c24; --crimson-ink:#ffffff; --oak:#b48a55; --oak-soft:#e8dcc8; --leaf:#3f7d4e;
+  --sky-1:#dfe7f0; --sky-2:#a9bbd0; --sky-3:#8197b3;
+  --night-1:#1d2840; --night-2:#0c1220; --night-3:#060a14;
+  /* immersive overlay is always dark, like a dimmed gallery */
+  --hud-ink:#111214; --hud-panel:#1c1d21; --hud-fg:#f1eee9; --hud-muted:#aaa49b; --hud-dim:#7a756d; --hud-line:rgba(241,238,233,.14); --hud-line-2:rgba(241,238,233,.26); --hud-red:#d24149;
+  --display:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --body:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
+  --ui:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --brush:"Ma Shan Zheng","STKaiti","KaiTi",serif;
+  --r:12px; --wrap:1240px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141312; --panel:#1d1c1a; --panel-2:#272523; --line:rgba(240,235,228,.11); --line-2:rgba(240,235,228,.22);
+  --fg:#efebe5; --muted:#a8a199; --dim:#7b756e; --crimson:#d0434b; --crimson-ink:#fff; --oak:#c9a26d; --oak-soft:#3a3127; --leaf:#5fa36f;
+  --sky-1:#2a3346; --sky-2:#1a2131; --sky-3:#10151f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141312; --panel:#1d1c1a; --panel-2:#272523; --line:rgba(240,235,228,.11); --line-2:rgba(240,235,228,.22);
+  --fg:#efebe5; --muted:#a8a199; --dim:#7b756e; --crimson:#d0434b; --crimson-ink:#fff; --oak:#c9a26d; --oak-soft:#3a3127; --leaf:#5fa36f;
+  --sky-1:#2a3346; --sky-2:#1a2131; --sky-3:#10151f; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:15.5px/1.85 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.is-immersive{overflow:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--crimson);outline-offset:3px;border-radius:6px}
+h1,h2,h3{text-wrap:balance;margin:0;font-weight:900;font-family:var(--display)}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+.kicker{display:inline-flex;align-items:center;gap:10px;font:500 12px/1 var(--ui);letter-spacing:.16em;color:var(--crimson)}
+.kicker::before{content:"";width:30px;height:7px;background:radial-gradient(circle at 3.5px 50%,currentColor 2.6px,transparent 3px),radial-gradient(circle at calc(100% - 3.5px) 50%,currentColor 2.6px,transparent 3px),linear-gradient(currentColor,currentColor) center/100% 1.5px no-repeat}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:24px;min-height:66px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;min-width:0}
+.seal{flex:none;width:36px;height:36px;border-radius:6px;background:var(--crimson);display:grid;place-items:center;color:var(--crimson-ink);font:400 22px/1 var(--brush)}
+.brand strong{display:block;font:900 17px/1.15 var(--display);letter-spacing:.04em;white-space:nowrap}
+.brand small{display:block;font:500 10px/1.4 var(--mono);color:var(--muted);letter-spacing:.14em;margin-top:2px;white-space:nowrap}
+.nav{display:flex;gap:2px;margin-left:auto}
+.nav a{padding:8px 12px;border-radius:8px;text-decoration:none;color:var(--muted);font:500 14px var(--ui)}
+.nav a:hover{color:var(--fg);background:var(--panel-2)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:1px solid var(--line-2);background:transparent;padding:12px 20px;border-radius:8px;font:500 15px var(--ui);text-decoration:none;transition:background .2s,border-color .2s,transform .2s;white-space:nowrap}
+.btn:hover{border-color:var(--fg)}
+.btn-red{background:var(--crimson);color:var(--crimson-ink);border-color:var(--crimson)}
+.btn-red:hover{border-color:var(--crimson);filter:brightness(1.08);transform:translateY(-1px)}
+.btn svg{width:16px;height:16px}
+.top .btn{margin-left:auto}
+.nav + .btn{margin-left:0}
+
+/* hero */
+.hero .wrap{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(20px,3vw,48px);align-items:center;padding-block:clamp(28px,5vw,60px) 40px}
+.hero-copy{min-width:0;display:grid;gap:24px}
+.hero h1{font:900 clamp(34px,4.1vw,58px)/1.22 var(--display);letter-spacing:.01em}
+.hero h1 span{white-space:nowrap}
+.hero h1 em{font-style:normal;color:var(--crimson);text-decoration:underline;text-decoration-thickness:.08em;text-underline-offset:.18em}
+.lead{color:var(--muted);max-width:32em;margin:0;font-size:16px}
+.actions{display:flex;flex-wrap:wrap;gap:12px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);padding-top:20px;gap:12px}
+.stat b{display:block;font:500 clamp(20px,2.2vw,28px)/1.1 var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.stat b small{font-size:.5em;color:var(--muted);margin-left:2px}
+.stat span{font:12.5px/1.5 var(--ui);color:var(--muted)}
+
+/* 3D stage */
+.stage{position:relative;height:clamp(420px,64vh,640px);border-radius:18px;overflow:hidden;background:radial-gradient(120% 95% at 55% 20%,var(--sky-1) 0%,var(--sky-2) 58%,var(--sky-3) 100%);border:1px solid var(--line)}
+.stage.night{background:radial-gradient(120% 95% at 55% 20%,var(--night-1) 0%,var(--night-2) 60%,var(--night-3) 100%)}
+.stage canvas{display:block;width:100%;height:100%;touch-action:none}
+.stage-ui{position:absolute;inset:0;pointer-events:none;font-family:var(--ui)}
+.stage-ui > *{pointer-events:auto}
+.presets{position:absolute;top:14px;right:14px;display:flex;flex-wrap:wrap;gap:4px;padding:4px;background:rgba(17,18,20,.7);border:1px solid var(--hud-line);border-radius:10px;max-width:calc(100% - 28px)}
+.presets button{border:0;background:transparent;padding:6px 10px;border-radius:7px;font-size:12.5px;color:var(--hud-muted)}
+.presets button[aria-pressed="true"]{background:var(--hud-red);color:#fff}
+.tools{position:absolute;right:14px;bottom:14px;display:flex;gap:2px;padding:4px;background:rgba(17,18,20,.7);border:1px solid var(--hud-line);border-radius:10px}
+.tools button{width:34px;height:34px;border:0;background:transparent;border-radius:7px;display:grid;place-items:center;color:var(--hud-muted)}
+.tools button:hover,.tools button[aria-pressed="true"]{color:var(--hud-fg);background:rgba(255,255,255,.12)}
+.tools svg{width:17px;height:17px}
+.stage-note{position:absolute;left:14px;bottom:14px;font:12px/1.5 var(--ui);color:var(--hud-muted);pointer-events:none;background:rgba(17,18,20,.6);padding:7px 11px;border-radius:8px}
+.stage-note b{display:block;color:var(--hud-fg);font-weight:500}
+.hotspot{position:absolute;left:0;top:0;display:flex;align-items:center;gap:8px;padding:6px 11px 6px 9px;border-radius:999px;border:1px solid var(--hud-line-2);background:rgba(17,18,20,.82);color:var(--hud-fg);font-size:12.5px;white-space:nowrap;transform:translate(-50%,-130%);transition:opacity .25s}
+.hotspot::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--hud-red);box-shadow:0 0 0 4px rgba(210,65,73,.25)}
+.hotspot.main{border-color:var(--hud-red);background:rgba(155,28,36,.92)}
+.hotspot.main::before{background:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.25)}
+.hotspot:hover{filter:brightness(1.15)}
+.hotspot[data-off="1"]{opacity:0;pointer-events:none}
+.loading{position:absolute;inset:0;display:grid;place-items:center;color:var(--fg);font:13px var(--ui);pointer-events:none}
+.fallback{position:absolute;inset:0;display:grid;place-content:center;gap:8px;text-align:center;padding:24px;color:var(--fg);font-family:var(--ui)}
+
+/* immersive */
+.stage.immersive{position:fixed;inset:0;z-index:60;border-radius:0;border:0;height:auto}
+.stage.immersive .presets,.stage.immersive .tools,.stage.immersive .stage-note{display:none}
+.hud{position:fixed;inset:0;z-index:61;display:none;flex-direction:column;gap:14px;padding:calc(16px + env(safe-area-inset-top,0px)) clamp(16px,3vw,32px) calc(16px + env(safe-area-inset-bottom,0px));pointer-events:none;transition:background .5s;color:var(--hud-fg);font-family:var(--ui)}
+.hud.on{display:flex}
+.hud.inside{background:linear-gradient(180deg,rgba(17,18,20,.92),rgba(17,18,20,.76) 40%,rgba(17,18,20,.92));backdrop-filter:blur(6px);pointer-events:auto}
+.hud > *{pointer-events:auto}
+.hud .kicker{color:var(--hud-red)}
+.hud-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.hud-top .brand{pointer-events:none}
+.hud-top .brand small{color:var(--hud-muted)}
+.hud-top .seal{background:var(--hud-red);color:#fff}
+.hud-top .spacer{width:120px}
+.ghost{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;border:1px solid var(--hud-line-2);background:rgba(17,18,20,.82);color:var(--hud-fg);white-space:nowrap}
+.ghost:hover{border-color:var(--hud-fg)}
+.ghost svg{width:16px;height:16px}
+.hud-title{pointer-events:none!important;display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:6px 28px;max-width:1080px;width:100%;margin-inline:auto}
+.hud-title > div{min-width:0;display:grid;gap:4px}
+.hud-title h2{font:900 clamp(24px,3.2vw,40px)/1.15 var(--display);margin-top:6px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.hud-title h2 span{font:500 14px var(--mono);color:var(--hud-muted)}
+.hud-title .en{font:500 12.5px/1.4 var(--ui);color:var(--hud-red);letter-spacing:.02em}
+.hud-title p{margin:0;color:var(--hud-muted);max-width:36em;font:14px/1.75 var(--body);min-width:0;flex:1 1 300px}
+.journey{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;justify-items:center;gap:14px;padding:22px 28px;border-radius:14px;background:rgba(17,18,20,.82);border:1px solid var(--hud-line);backdrop-filter:blur(8px)}
+.journey ol{display:flex;gap:26px;margin:0;padding:0;list-style:none}
+.journey li{display:grid;justify-items:center;gap:6px;font-size:13px;color:var(--hud-dim);white-space:nowrap}
+.journey li span{width:28px;height:28px;border-radius:50%;border:1px solid var(--hud-line-2);display:grid;place-items:center;font:500 12px var(--mono)}
+.journey li.now{color:var(--hud-fg)}
+.journey li.now span{border-color:var(--hud-red);color:var(--hud-red);box-shadow:0 0 0 4px rgba(210,65,73,.2)}
+.journey li.done span{background:var(--hud-red);border-color:var(--hud-red);color:#fff}
+.journey button{border:0;background:none;color:var(--hud-muted);font-size:13px;text-decoration:underline;text-underline-offset:3px}
+.fade{position:fixed;inset:0;z-index:62;background:var(--hud-ink);opacity:0;pointer-events:none;transition:opacity .45s}
+.fade.on{opacity:1}
+.viewer{flex:1;min-height:0;width:100%;max-width:1080px;margin-inline:auto;display:none;grid-template-rows:minmax(0,1fr) auto;gap:10px}
+.viewer.on{display:grid;animation:rise .5s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.frame{position:relative;min-height:200px;width:100%;border-radius:12px;overflow:hidden;background:#0a0b0c;border:1px solid var(--hud-line-2);cursor:zoom-in;touch-action:none}
+.frame.zoomed{cursor:grab}
+.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:transform .35s ease,opacity .3s;user-select:none;-webkit-user-drag:none}
+.frame.dragging img{transition:opacity .3s}
+.frame .blur{object-fit:cover;filter:blur(28px) brightness(.4);transform:scale(1.2)}
+.photo-nav{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:1px solid var(--hud-line-2);background:rgba(17,18,20,.82);color:var(--hud-fg);display:grid;place-items:center}
+.photo-nav svg{width:18px;height:18px}
+.photo-nav.prev{left:12px}.photo-nav.next{right:12px}
+.viewer-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;font-size:13px;color:var(--hud-muted)}
+.viewer-bar .cap{flex:1 1 240px;min-width:0;color:var(--hud-fg)}
+.seg{display:inline-flex;padding:3px;border-radius:9px;background:rgba(17,18,20,.85);border:1px solid var(--hud-line)}
+.seg button{border:0;background:none;padding:5px 12px;border-radius:7px;font-size:12.5px;color:var(--hud-muted)}
+.seg button[aria-pressed="true"]{background:rgba(255,255,255,.14);color:var(--hud-fg)}
+.count{font:500 12px var(--mono);color:var(--hud-muted)}
+.strip{margin-top:auto;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;max-width:1080px;width:100%;margin-inline:auto}
+.strip::-webkit-scrollbar{display:none}
+.strip button{flex:1 0 112px;border:1px solid var(--hud-line);border-radius:10px;background:rgba(17,18,20,.86);padding:0;overflow:hidden;text-align:left;color:var(--hud-fg)}
+.strip img{width:100%;height:54px;object-fit:cover;opacity:.65}
+.strip span{display:block;padding:6px 9px;font-size:12.5px;white-space:nowrap}
+.strip span i{font:500 11px var(--mono);font-style:normal;color:var(--hud-dim);margin-right:6px}
+.strip button[aria-current="true"]{border-color:var(--hud-red)}
+.strip button[aria-current="true"] img{opacity:1}
+
+/* sections */
+section.block{padding-block:clamp(56px,8vw,100px);border-top:1px solid var(--line)}
+.head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:16px 32px;margin-bottom:36px}
+.head > div{min-width:0;display:grid;gap:14px}
+.head h2{font:900 clamp(28px,3.4vw,44px)/1.2 var(--display)}
+.head p{margin:0;color:var(--muted);max-width:34em;min-width:0}
+.zones{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{border:1px solid var(--line);background:var(--panel);border-radius:var(--r);padding:0;overflow:hidden;text-align:left;display:flex;flex-direction:column;transition:border-color .2s,transform .2s;font-family:var(--body)}
+.card:hover{border-color:var(--crimson);transform:translateY(-2px)}
+.card .ph{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--panel-2)}
+.card .ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.card:hover .ph img{transform:scale(1.05)}
+.card .no{position:absolute;left:10px;top:10px;font:500 11px var(--mono);background:rgba(17,18,20,.78);color:#fff;padding:3px 8px;border-radius:6px}
+.card .tx{padding:14px 16px 18px;display:grid;gap:6px}
+.card .tag{font:500 12px var(--ui);color:var(--crimson);letter-spacing:.06em}
+.card strong{font:900 18px/1.35 var(--display)}
+.card small{color:var(--muted);font-size:13.5px;line-height:1.7}
+.card.unit .tag{display:flex;align-items:center;gap:8px}
+.card.unit .tag b{font:900 22px/1 var(--display)}
+.card.unit .tag::after{content:"";flex:1;height:2px;background:var(--crimson)}
+.note{margin-top:18px;font:12.5px var(--ui);color:var(--dim)}
+
+.sys{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.sys article{border:1px solid var(--line);border-radius:var(--r);padding:24px;display:grid;gap:16px;align-content:start;min-width:0;background:var(--panel)}
+.sys h3{font:900 24px/1.25 var(--display)}
+.sys h3 span{display:block;font:500 11px var(--mono);color:var(--crimson);letter-spacing:.14em;margin-bottom:6px;font-weight:500}
+.sys p{margin:0;color:var(--muted);font-size:14px}
+.books{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.books li{padding:10px 14px;border-radius:8px;background:var(--panel-2);font:600 15px/1.4 var(--body);border-left:3px solid var(--oak)}
+.quote{margin:16px 0 0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:center;border-radius:var(--r);padding:26px 28px;background:var(--oak-soft)}
+.quote .glyph{font:400 clamp(44px,6vw,64px)/1 var(--brush);color:var(--crimson)}
+.quote blockquote{margin:0;font:600 clamp(18px,2vw,22px)/1.6 var(--body)}
+.quote figcaption{margin-top:6px;font:13px var(--ui);color:var(--muted)}
+
+.life{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(20px,3vw,40px);align-items:start}
+.tl{margin:0;padding:0;list-style:none;display:grid}
+.tl li{display:grid;grid-template-columns:6.2em minmax(0,1fr);gap:18px;padding:14px 0;border-top:1px solid var(--line);position:relative}
+.tl time{font:500 15px/1.6 var(--mono);color:var(--crimson);font-variant-numeric:tabular-nums}
+.tl p{margin:0;min-width:0}
+.tl p small{display:block;color:var(--dim);font:12px var(--ui);margin-top:2px}
+.portrait{border-radius:var(--r);overflow:hidden;border:1px solid var(--line);margin:0;background:var(--panel);position:sticky;top:90px}
+.portrait img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.portrait figcaption{padding:12px 16px;font:13px/1.6 var(--ui);color:var(--muted)}
+.portrait figcaption b{display:block;color:var(--fg);font:900 17px var(--display);margin-bottom:2px}
+
+.legacy{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(20px,3vw,40px);align-items:start}
+.legacy figure{margin:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.legacy figure img{width:100%;max-height:560px;object-fit:cover;object-position:top}
+.legacy figcaption{padding:10px 14px;font:12.5px var(--ui);color:var(--muted);background:var(--panel)}
+.big{font:900 clamp(22px,2.4vw,28px)/1.45 var(--display);margin:0 0 20px}
+.big em{font-style:normal;color:var(--crimson)}
+.facts{display:grid;margin:0}
+.facts > div{display:grid;grid-template-columns:5.5em minmax(0,1fr);gap:16px;padding:14px 0;border-top:1px solid var(--line)}
+.facts dt{color:var(--dim);font:13px/1.8 var(--ui)}
+.facts dd{margin:0;font-size:15px}
+.facts dd b{font:500 1em var(--mono);color:var(--crimson)}
+
+footer{border-top:1px solid var(--line);padding-block:28px 40px;color:var(--dim);font:12.5px/1.7 var(--ui)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px}
+
+@media (max-width:1020px){
+  .hero .wrap{grid-template-columns:1fr}
+  .zones{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sys,.life,.legacy{grid-template-columns:1fr}
+  .portrait{position:static}
+  .nav{display:none}
+}
+@media (max-width:560px){
+  .zones{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .brand small{display:none}
+  .top .btn{padding:10px 14px;font-size:14px}
+  .journey{padding:18px}.journey ol{gap:14px}
+  .hud-top .brand,.hud-top .spacer{display:none}
+  .strip button{flex:0 0 100px}.strip img{height:44px}
+  .photo-nav{width:36px;height:36px}
+  .presets button{padding:5px 8px;font-size:12px}
+  .stage-note{display:none}
+  .quote{grid-template-columns:1fr;gap:8px}
+  .tl li{grid-template-columns:4.6em minmax(0,1fr);gap:12px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="seal" aria-hidden="true">契</span><span><strong>冯契学术成就陈列室</strong><small>ECNU · FENG QI EXHIBITION</small></span></a>
+    <nav class="nav" aria-label="页面导航">
+      <a href="#top">3D 圆楼</a><a href="#zones">展区</a><a href="#wisdom">智慧说</a><a href="#life">生平</a><a href="#legacy">薪火</a>
+    </nav>
+    <button class="btn btn-red" data-enter="hall" type="button">走进陈列室<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="kicker">华东师范大学 · 冯契学术成就陈列室</span>
+        <h1><span>化理论为方法，</span><br><span><em>化理论为德性</em>。</span></h1>
+        <p class="lead">冯契（1915—1995），当代中国哲学家、哲学史家，华东师范大学哲学学科的奠基人。陈列室以五个展陈单元，讲述他从古越农家走上问道之路、建立“智慧说”哲学体系、以“两化”育人的一生。</p>
+        <div class="actions">
+          <button class="btn btn-red" data-enter="exterior" type="button">从圆楼门前走进<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
+          <a class="btn" href="#zones">浏览 9 处展区</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>1915<small>—1995</small></b><span>生卒年</span></div>
+          <div class="stat"><b>5<small>个</small></b><span>展陈单元</span></div>
+          <div class="stat"><b>3+2<small>部</small></b><span>智慧说三篇 · 哲学史两种</span></div>
+          <div class="stat"><b>500+<small>篇</small></b><span>海内外研究论文</span></div>
+        </div>
+      </div>
+
+      <div class="stage" id="stage">
+        <div class="loading" id="loading">正在搭建玻璃圆楼…</div>
+        <div class="stage-ui" id="stageUi">
+          <div class="presets" role="group" aria-label="观察视角">
+            <button type="button" data-view="0" aria-pressed="true">全景</button>
+            <button type="button" data-view="1">正立面</button>
+            <button type="button" data-view="2">圆楼入口</button>
+            <button type="button" data-view="3">侧翼连廊</button>
+          </div>
+          <div class="stage-note"><b>玻璃圆楼 · 3D 示意建模</b>拖动旋转 · 滚轮或双指缩放</div>
+          <div class="tools" role="group" aria-label="模型控制">
+            <button type="button" id="tRotate" aria-pressed="true" title="自动旋转" aria-label="自动旋转"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></button>
+            <button type="button" id="tNight" aria-pressed="false" title="夜景" aria-label="切换夜景"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+            <button type="button" id="tIn" title="放大" aria-label="放大"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+            <button type="button" id="tOut" title="缩小" aria-label="缩小"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/></svg></button>
+            <button type="button" id="tReset" title="重置视角" aria-label="重置视角"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="zones">
+    <div class="wrap">
+      <div class="head">
+        <div><span class="kicker">展区 · 按参观路线排列</span><h2>从圆楼门前，走过五个展陈单元</h2></div>
+        <p>点开任意展区，镜头会从圆楼外靠近、穿过玻璃门厅，再进入这个展区的实景照片。</p>
+      </div>
+      <div class="zones" id="zoneGrid"></div>
+      <p class="note">全部照片为冯契学术成就陈列室及所在建筑实景拍摄；展区文字摘自展板。</p>
+    </div>
+  </section>
+
+  <section class="block" id="wisdom">
+    <div class="wrap">
+      <div class="head">
+        <div><span class="kicker">智慧说 · 第三单元</span><h2>会通中、西、马，探求真、善、美</h2></div>
+        <p>“文革”结束后，已过花甲之年的冯契在人生最后二十年写成原创性的哲学体系。它以“智慧说三篇”为核心，以“哲学史两种”为代表，把哲学与人格紧密结合。</p>
+      </div>
+      <div class="sys">
+        <article><h3><span>THREE TREATISES</span>智慧说三篇</h3><ul class="books"><li>《认识世界和认识自己》</li><li>《逻辑思维的辩证法》</li><li>《人的自由和真善美》</li></ul><p>构成“智慧说”哲学体系的核心。</p></article>
+        <article><h3><span>TWO HISTORIES</span>哲学史两种</h3><ul class="books"><li>《中国古代哲学的逻辑发展》</li><li>《中国近代哲学的革命进程》</li></ul><p>以哲学史研究支撑哲学体系，史论结合。</p></article>
+        <article><h3><span>TWO TRANSFORMATIONS · 1956</span>“两化”</h3><ul class="books"><li>化理论为方法</li><li>化理论为德性</li></ul><p>既是他建构哲学体系的原则，也是他立德树人、为学与为人相统一的教育原则。</p></article>
+      </div>
+      <figure class="quote">
+        <span class="glyph" aria-hidden="true">智慧</span>
+        <div><blockquote>不论处境如何，始终保持心灵自由思考，是爱智者的本色。</blockquote><figcaption>冯契 · 第三单元展板引语</figcaption></div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="block" id="life">
+    <div class="wrap">
+      <div class="head">
+        <div><span class="kicker">生平</span><h2>从诸暨农家，到华东师大的讲台</h2></div>
+        <p>时间线按展板与公开资料整理，五个展陈单元大致对应这条路线。</p>
+      </div>
+      <div class="life">
+        <ol class="tl">
+          <li><time>1915</time><p>11 月 4 日生于浙江诸暨一个农民家庭。同年《青年杂志》创刊，新文化运动拉开序幕。<small>第一单元 · 古越哺英才</small></p></li>
+          <li><time>1935</time><p>考入清华大学哲学系，师从金岳霖、冯友兰；积极投身“一二·九”学生爱国运动。<small>第一单元 · 清华孕志向</small></p></li>
+          <li><time>1937</time><p>抗日战争全面爆发。12 月在山西临汾等地参加“牺牲救国同盟会”工作。<small>第二单元 · 颠沛救亡路</small></p></li>
+          <li><time>1938</time><p>春天奔赴延安，7 月进入鲁迅艺术学院学习。</p></li>
+          <li><time>1939</time><p>11 月回到昆明西南联大复学，追随金岳霖、冯友兰、汤用彤研究哲学，写成研究生毕业论文《智慧》。<small>第二单元 · 确然问道心</small></p></li>
+          <li><time>1950s</time><p>来到新成立的华东师范大学，开创哲学学科。</p></li>
+          <li><time>1956</time><p>提出“理论不仅要化为方法，还要化为内在的德性”，简称“两化”。<small>第四单元 · “两化”育新人</small></p></li>
+          <li><time>1976 后</time><p>“文革”中数百万字手稿散失。此后二十年写成“智慧说三篇”与“哲学史两种”。<small>第三单元 · 会通中西马</small></p></li>
+          <li><time>1995</time><p>冯契先生逝世，著述后结集为《冯契文集》出版。<small>第五单元 · 文章誉四海</small></p></li>
+        </ol>
+        <figure class="portrait"><img src="assets/preface-s.jpg" alt="冯契先生铜像，左为人物简介，右为前言" loading="lazy" width="379" height="284"><figcaption><b>冯契 1915—1995</b>陈列室内的冯契先生铜像，两侧为人物简介与前言展板。</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="legacy">
+    <div class="wrap">
+      <div class="head">
+        <div><span class="kicker">薪火 · 第五单元</span><h2>文章誉四海，智慧传薪火</h2></div>
+        <p>“智慧说”对中国哲学的未来发展启示良多，二十多年来引发海内外学界广泛关注。</p>
+      </div>
+      <div class="legacy">
+        <figure><img src="assets/unit5.jpg" alt="第五单元展板：文章誉四海 智慧传薪火" loading="lazy" width="1280" height="1707"><figcaption>第五单元展板 · The flame of the love of wisdom crossing borders and generations</figcaption></figure>
+        <div>
+          <p class="big">“智慧说”正<em>日益成为现代中国哲学中的“显学”</em>。<br><small style="font:500 13px var(--ui);color:var(--dim)">方克立语，引自第五单元展板</small></p>
+          <dl class="facts">
+            <div><dt>文集</dt><dd>《冯契文集》<b>10</b> 卷本 1996 年出版，后有 <b>11</b> 卷增订版</dd></div>
+            <div><dt>研究</dt><dd>海内外以中、英、德、日、韩等语种发表的论文逾 <b>500</b> 篇，另有专著、论文集多部</dd></div>
+            <div><dt>冯契学派</dt><dd>在冯契身后成长起来的学生中多人卓然成家，学术界形成了“冯契学派”</dd></div>
+            <div><dt>基金</dt><dd><b>2000</b> 年华东师范大学设立冯契基金，推进哲学学科的教学与研究</dd></div>
+            <div><dt>纪录片</dt><dd><b>2015</b> 年摄制纪录片《冯契》，聚焦冯契生平和思想、为人与为学</dd></div>
+            <div><dt>纪念</dt><dd><b>2025</b> 年 12 月，纪念冯契诞辰 110 周年学术成就展在上海开幕</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>华东师范大学 · 冯契学术成就陈列室 3D 导览</span><span>3D 建筑为依据实景照片的示意建模，尺寸与细节以现场为准</span></div>
+</footer>
+
+<div class="fade" id="fade"></div>
+<div class="hud" id="hud" role="dialog" aria-modal="true" aria-label="走进冯契学术成就陈列室">
+  <div class="hud-top">
+    <button class="ghost" id="leave" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>返回全景</button>
+    <span class="brand"><span class="seal" aria-hidden="true">契</span><span><strong>冯契学术成就陈列室</strong><small>STEP INSIDE</small></span></span>
+    <span class="spacer" aria-hidden="true"></span>
+  </div>
+  <div class="hud-title">
+    <div><span class="kicker" id="hudKicker">走进陈列室</span><h2 id="hudName">序厅<span id="hudNo">02</span></h2><span class="en" id="hudEn"></span></div>
+    <p id="hudDesc"></p>
+  </div>
+  <div class="journey" id="journey">
+    <ol><li data-s="1"><span>1</span>走近圆楼</li><li data-s="2"><span>2</span>穿过门厅</li><li data-s="3"><span>3</span>步入展区</li></ol>
+    <button type="button" id="skip">跳过运镜</button>
+  </div>
+  <div class="viewer" id="viewer">
+    <div class="frame" id="frame" tabindex="0" aria-label="实景照片：双击或按加号放大，放大后可拖动">
+      <img class="blur" id="photoBlur" alt="">
+      <img id="photo" alt="" draggable="false">
+      <button class="photo-nav prev" id="pPrev" type="button" aria-label="上一个展区"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></button>
+      <button class="photo-nav next" id="pNext" type="button" aria-label="下一个展区"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></button>
+    </div>
+    <div class="viewer-bar">
+      <span class="cap" id="cap"></span>
+      <span class="count" id="count"></span>
+      <span class="seg" role="group" aria-label="查看方式"><button type="button" id="vFull" aria-pressed="true">完整画面</button><button type="button" id="vZoom" aria-pressed="false">放大细看</button></span>
+    </div>
+  </div>
+  <nav class="strip" id="strip" aria-label="切换展区"></nav>
+</div>
+
+<script>
+window.ZONES=[
+  {id:"exterior",name:"玻璃圆楼",short:"圆楼外观",tag:"建筑外观",en:"The Rotunda",desc:"玻璃圆楼立在两翼楼之间，底层环绕白色立柱与圆形玻璃雨棚。拾级而上，透过玻璃门就能看到陈列室的主题墙。",photos:[["exterior","玻璃圆楼正面，门后可见“冯契学术成就陈列室”主题墙"]]},
+  {id:"hall",name:"序厅 · 主题墙",short:"主题墙",tag:"序厅",en:"The Exhibition of Feng Qi's Academic Achievements",desc:"书法题写的“冯契学术成就陈列室”，背景铺满冯契手迹，右侧是先生的人物剪影，墙下一排绿植。",photos:[["hall","序厅主题墙：冯契学术成就陈列室"]]},
+  {id:"preface",name:"人物简介与前言",short:"人物与前言",tag:"序厅",en:"A Brief Introduction to Feng Qi · Preface",desc:"冯契先生铜像（1915—1995）居中，左为人物简介，右为前言，展开整个陈列的叙述。",photos:[["preface","冯契先生铜像与人物简介、前言展板"]]},
+  {id:"unit1",unit:1,name:"古越哺英才 清华孕志向",short:"古越 · 清华",tag:"第一单元",en:"Talents Nurtured in Ancient Yue and Ambitions Formed at Tsinghua University",desc:"1915 年冯契生于浙江诸暨农家，古越山水滋养了他幼小的心灵。1935 年入大学，投身“一二·九”运动，从追求民主进步的爱国青年转向马克思主义者。",photos:[["unit1","第一单元展墙：农家出生 恩师提携"]]},
+  {id:"unit2",unit:2,name:"颠沛救亡路 确然问道心",short:"救亡 · 问道",tag:"第二单元",en:"A Tortuous Road to the Salvation of China and a Firm Will to the Pursuit of Wisdom",desc:"抗战爆发后，冯契参加牺盟会，奔赴延安入鲁艺。1939 年回西南联大复学，“真正感受到自己有一个哲学问题非要解决不可”，写成研究生论文《智慧》。",photos:[["unit2","第二单元展板：颠沛救亡路 确然问道心"]]},
+  {id:"unit3",unit:3,name:"会通中西马 探求真善美",short:"会通 · 真善美",tag:"第三单元",en:"Integrating Marxist, Chinese and Western Philosophical Traditions to Explore Truth, Goodness and Beauty",desc:"“文革”中数百万字手稿散失。此后二十年，他写成以“智慧说三篇”为核心的哲学体系和“哲学史两种”，在世界哲学舞台上再现了曾经失去的绚丽色彩。",photos:[["unit3","第三单元展板：会通中、西、马 探求真、善、美"]]},
+  {id:"unit4",unit:4,name:"“两化”育新人 杏坛扬师德",short:"两化 · 育人",tag:"第四单元",en:"Educational Achievements through the “Two Transformations”",desc:"1956 年，冯契提出理论要“化为方法”“化为德性”。他授业解蔽、诲人不倦，希望成为学生脚下的肩膀；学术界由此形成了“冯契学派”。",photos:[["unit4","第四单元展板：“两化”育新人 杏坛扬师德"]]},
+  {id:"unit5",unit:5,name:"文章誉四海 智慧传薪火",short:"四海 · 薪火",tag:"第五单元",en:"The Flame of the Love of Wisdom Crossing Borders and Generations",desc:"《冯契文集》出版，海内外中、英、德、日、韩等语种论文逾 500 篇。2000 年华东师大设立冯契基金，2015 年摄制纪录片《冯契》。",photos:[["unit5","第五单元展板：文章誉四海 智慧传薪火"]]},
+  {id:"forum",name:"圆厅研讨室",short:"圆厅",tag:"圆楼内部",en:"The Round Hall",desc:"圆楼内部的环形会议厅：环形长桌围着中央绿植，二层是一圈带玻璃栏杆的回廊。",photos:[["forum","圆楼内的环形会议厅与二层回廊"]]}
+];
+</script>
+
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script>
+// Non-3D UI: zone grid, photo viewer. Works even if WebGL or the CDN fails.
+(function(){
+  const Z=window.ZONES, $=id=>document.getElementById(id), pad=n=>String(n).padStart(2,"0");
+  const CN=["","一","二","三","四","五"];
+  const grid=$("zoneGrid");
+  Z.forEach((z,i)=>{
+    const b=document.createElement("button");b.type="button";b.className="card"+(z.unit?" unit":"");b.dataset.enter=z.id;
+    const tag=z.unit?`<b>${z.unit}</b>第${CN[z.unit]}单元`:z.tag;
+    b.innerHTML=`<span class="ph"><img src="assets/${z.photos[0][0]}-s.jpg" alt="${z.photos[0][1]}" loading="lazy"><span class="no">${pad(i+1)}</span></span><span class="tx"><span class="tag">${tag}</span><strong>${z.name}</strong><small>${z.desc}</small></span>`;
+    grid.appendChild(b);
+  });
+  const strip=$("strip");
+  Z.forEach((z,i)=>{
+    const b=document.createElement("button");b.type="button";b.dataset.go=z.id;
+    b.innerHTML=`<img src="assets/${z.photos[0][0]}-s.jpg" alt=""><span><i>${pad(i+1)}</i>${z.short}</span>`;
+    strip.appendChild(b);
+  });
+
+  const V={zone:null,idx:0,zoom:false,pan:{x:0,y:0}};
+  const frame=$("frame"),img=$("photo"),blur=$("photoBlur");
+  function apply(){const sc=V.zoom?1.9:1;img.style.transform=`translate(${V.zoom?V.pan.x:0}px,${V.zoom?V.pan.y:0}px) scale(${sc})`;frame.classList.toggle("zoomed",V.zoom);$("vFull").setAttribute("aria-pressed",!V.zoom);$("vZoom").setAttribute("aria-pressed",V.zoom);}
+  function setZoom(z){V.zoom=z;V.pan={x:0,y:0};apply();}
+  function show(){
+    const z=V.zone,p=z.photos[V.idx];
+    img.style.opacity=0;
+    const src=`assets/${p[0]}.jpg`;
+    const pre=new Image();pre.onload=pre.onerror=()=>{img.src=src;blur.src=`assets/${p[0]}-s.jpg`;img.alt=p[1];img.style.opacity=1;};pre.src=src;
+    $("cap").textContent=p[1];
+    const i=Z.indexOf(z);$("count").textContent=`${i+1} / ${Z.length}`;
+    setZoom(false);
+  }
+  function setZone(id){
+    const i=Z.findIndex(z=>z.id===id);V.zone=Z[i];V.idx=0;
+    $("hudName").firstChild.nodeValue=V.zone.name;$("hudNo").textContent=pad(i+1);
+    $("hudEn").textContent=V.zone.en;$("hudDesc").textContent=V.zone.desc;
+    $("hudKicker").dataset.tag=V.zone.unit?`第${CN[V.zone.unit]}单元`:V.zone.tag;
+    strip.querySelectorAll("button").forEach(b=>b.setAttribute("aria-current",b.dataset.go===id?"true":"false"));
+    const cur=strip.querySelector(`[data-go="${id}"]`);cur&&cur.scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"});
+    show();
+    if(window.onZone)window.onZone();
+  }
+  function step(d){const z=V.zone;if(!z)return;if(z.photos.length>1&&((d>0&&V.idx<z.photos.length-1)||(d<0&&V.idx>0))){V.idx+=d;show();return;}
+    const i=Z.indexOf(z),n=(i+d+Z.length)%Z.length;setZone(Z[n].id);}
+  $("pPrev").onclick=()=>step(-1);
+  $("pNext").onclick=()=>step(1);
+  $("vFull").onclick=()=>setZoom(false);$("vZoom").onclick=()=>setZoom(true);
+  frame.addEventListener("dblclick",e=>{if(e.target.closest("button"))return;setZoom(!V.zoom);});
+  frame.addEventListener("wheel",e=>{e.preventDefault();setZoom(e.deltaY<0);},{passive:false});
+  const ptr=new Map();let pinch=0;
+  function clampPan(){const w=frame.clientWidth*.45,h=frame.clientHeight*.45;V.pan.x=Math.max(-w,Math.min(w,V.pan.x));V.pan.y=Math.max(-h,Math.min(h,V.pan.y));}
+  frame.addEventListener("pointerdown",e=>{if(e.target.closest("button"))return;frame.setPointerCapture(e.pointerId);ptr.set(e.pointerId,{x:e.clientX,y:e.clientY});if(ptr.size===2){const[a,b]=[...ptr.values()];pinch=Math.hypot(a.x-b.x,a.y-b.y);}frame.classList.add("dragging");});
+  frame.addEventListener("pointermove",e=>{const o=ptr.get(e.pointerId);if(!o)return;ptr.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(ptr.size===2){const[a,b]=[...ptr.values()],r=Math.hypot(a.x-b.x,a.y-b.y)/(pinch||1);if(r>1.15&&!V.zoom)setZoom(true);else if(r<.85&&V.zoom)setZoom(false);return;}
+    const dx=e.clientX-o.x,dy=e.clientY-o.y;if(V.zoom){V.pan.x+=dx;V.pan.y+=dy;clampPan();apply();}});
+  const up=e=>{ptr.delete(e.pointerId);if(!ptr.size)frame.classList.remove("dragging");};
+  frame.addEventListener("pointerup",up);frame.addEventListener("pointercancel",up);
+  frame.addEventListener("keydown",e=>{const k=e.key;if(k==="+"||k==="="){setZoom(true);e.preventDefault();}if(k==="-"){setZoom(false);e.preventDefault();}
+    if(V.zoom&&k.startsWith("Arrow")){e.preventDefault();e.stopPropagation();const m={ArrowLeft:[40,0],ArrowRight:[-40,0],ArrowUp:[0,40],ArrowDown:[0,-40]}[k];V.pan.x+=m[0];V.pan.y+=m[1];clampPan();apply();}});
+  window.Viewer={setZone,step,get zoom(){return V.zoom}};
+})();
+</script>
+
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+const $=id=>document.getElementById(id);
+const stage=$("stage"), hud=$("hud"), fade=$("fade");
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+let renderer;
+try{ renderer=new THREE.WebGLRenderer({antialias:true,alpha:true}); }
+catch(e){ $("loading").remove(); stage.insertAdjacentHTML("beforeend",'<div class="fallback"><strong>当前浏览器无法显示 3D 模型</strong><span>请换用支持 WebGL 的浏览器。展区实景与介绍仍可正常浏览。</span></div>'); }
+if(renderer) init();
+
+function init(){
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.outputColorSpace=THREE.SRGBColorSpace; renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.05;
+stage.prepend(renderer.domElement);
+renderer.domElement.setAttribute("aria-label","冯契学术成就陈列室所在玻璃圆楼的三维示意模型，可拖动旋转、滚轮缩放");
+renderer.domElement.setAttribute("role","img");
+
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(38,1,.1,500);
+const controls=new OrbitControls(camera,renderer.domElement);
+controls.enableDamping=true; controls.dampingFactor=.07; controls.minDistance=10; controls.maxDistance=90; controls.maxPolarAngle=1.45; controls.autoRotate=!reduce; controls.autoRotateSpeed=.4; controls.enablePan=false;
+
+const RZ=-2;                 // rotunda centre z
+const VIEWS=[
+  {p:[34,22,40],t:[0,5.5,0]},
+  {p:[0,3.2,30],t:[0,7,RZ]},
+  {p:[6,3.4,15],t:[0,2.4,RZ+3]},
+  {p:[-26,9,18],t:[-8,5.5,RZ]}
+];
+camera.position.set(...VIEWS[0].p); controls.target.set(...VIEWS[0].t);
+
+// lights
+const hemi=new THREE.HemisphereLight(0xe4ecf7,0x4a4e57,1.15); scene.add(hemi);
+const sun=new THREE.DirectionalLight(0xfff3e2,2.2); sun.position.set(20,34,24); sun.castShadow=true;
+sun.shadow.mapSize.set(2048,2048); Object.assign(sun.shadow.camera,{left:-34,right:34,top:34,bottom:-34,near:1,far:110}); sun.shadow.bias=-.0004; scene.add(sun);
+const innerGlow=new THREE.PointLight(0xffd59a,0,22,1.4); innerGlow.position.set(0,2,RZ); scene.add(innerGlow);
+
+const std=(c,o={})=>new THREE.MeshStandardMaterial({color:c,roughness:.8,...o});
+const M={
+  plate:std(0x4a4d52),edge:std(0x34373c),pave:std(0xc4c0b8,{roughness:.95}),pave2:std(0xa9a59d,{roughness:.95}),stone:std(0xd9d5cc),
+  lawn:std(0x5f8a4c),white:std(0xf2f2ef),silver:std(0xcfd5da,{roughness:.35,metalness:.55}),dark:std(0x2b2f36),
+  tile:std(0xdfe1e3),
+  door:std(0x8fb3b4,{roughness:.1,metalness:.2,transparent:true,opacity:.45}),
+  canopy:std(0xa9d0cc,{roughness:.1,metalness:.3,transparent:true,opacity:.55,side:THREE.DoubleSide}),
+  railing:std(0xbfe0dc,{roughness:.1,transparent:true,opacity:.35}),
+  trunk:std(0x6b5440),leaf:std(0x3e7a45),leaf2:std(0x4f8d4f),
+  bulb:std(0xfff2c9,{emissive:0xffd27a,emissiveIntensity:0}),
+  red:std(0x9b1c24),cloud:new THREE.MeshStandardMaterial({color:0xffffff,roughness:1,transparent:true,opacity:.85})
+};
+const add=(geo,mat,x,y,z,o={})=>{const m=new THREE.Mesh(geo,mat);m.position.set(x,y,z);if(o.ry)m.rotation.y=o.ry;m.castShadow=o.cast!==false;m.receiveShadow=true;(o.parent||scene).add(m);return m;};
+const box=(w,h,d,mat,x,y,z,o)=>add(new THREE.BoxGeometry(w,h,d),mat,x,y+h/2,z,o);
+
+function canvasTex(w,h,draw){const c=document.createElement("canvas");c.width=w;c.height=h;const g=c.getContext("2d");draw(g,w,h);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=4;t.userData.redraw=()=>{g.clearRect(0,0,w,h);draw(g,w,h);t.needsUpdate=true;};return t;}
+
+// ground
+box(64,.8,44,M.edge,0,-.9,2);
+box(63,.1,43,M.plate,0,-.1,2,{cast:false});
+box(40,.06,22,M.pave,0,0,RZ+13,{cast:false});
+for(let x=-19;x<=19;x+=2) box(.05,.02,22,M.pave2,x,.06,RZ+13,{cast:false});
+for(let z=RZ+3;z<=RZ+24;z+=2) box(40,.02,.05,M.pave2,0,.06,z,{cast:false});
+box(63,.07,3,M.pave2,0,0,RZ+20.5,{cast:false});           // campus road
+[[-14,RZ+8.5],[14,RZ+8.5]].forEach(([x,z])=>box(9,.12,4.4,M.lawn,x,0,z,{cast:false}));
+[[-26,RZ+4],[26,RZ+4]].forEach(([x,z])=>box(10,.12,30,M.lawn,x,0,z,{cast:false}));
+
+// ---- rotunda ----
+const R0=4.4;                       // ground-floor glass wall
+add(new THREE.CylinderGeometry(6.6,6.8,.6,72),M.stone,0,.3,RZ);
+const lobbyTex=canvasTex(1024,256,(g,w,h)=>{g.fillStyle="#1e2a2e";g.fillRect(0,0,w,h);const gr=g.createLinearGradient(0,0,0,h);gr.addColorStop(0,"rgba(160,200,200,.35)");gr.addColorStop(1,"rgba(20,30,34,0)");g.fillStyle=gr;g.fillRect(0,0,w,h);g.strokeStyle="rgba(210,225,225,.55)";g.lineWidth=3;for(let x=0;x<w;x+=64){g.beginPath();g.moveTo(x,0);g.lineTo(x,h);g.stroke();}g.beginPath();g.moveTo(0,h*.42);g.lineTo(w,h*.42);g.stroke();});
+lobbyTex.wrapS=THREE.RepeatWrapping; lobbyTex.repeat.x=3;
+const lobbyMat=std(0xffffff,{map:lobbyTex,roughness:.12,metalness:.35,emissive:0xffc98a,emissiveIntensity:0});
+add(new THREE.CylinderGeometry(R0,R0,3.5,72,1,true),lobbyMat,0,2.35,RZ,{cast:false});
+add(new THREE.CylinderGeometry(R0-.05,R0-.05,.2,72),M.dark,0,4.0,RZ);
+// columns
+const colAng=[-62,-22,22,62,118,160,200,242].map(a=>a*Math.PI/180);
+colAng.forEach(a=>add(new THREE.CylinderGeometry(.46,.46,3.9,24),M.white,Math.sin(a)*5.15,2.55,RZ+Math.cos(a)*5.15));
+// canopy ring
+const canopyGeo=new THREE.LatheGeometry([new THREE.Vector2(4.6,0),new THREE.Vector2(7.6,-.25),new THREE.Vector2(7.6,-.1),new THREE.Vector2(4.6,.15)],96);
+add(canopyGeo,M.canopy,0,3.55,RZ,{cast:false});
+add(new THREE.TorusGeometry(7.6,.09,8,120),M.silver,0,3.38,RZ).rotation.x=Math.PI/2;
+for(let k=0;k<24;k++){const a=k/24*Math.PI*2;const rib=box(3,.06,.06,M.silver,0,0,0);rib.position.set(Math.sin(a)*6.1,3.52,RZ+Math.cos(a)*6.1);rib.rotation.y=a+Math.PI/2;rib.rotation.z=.08;}
+// drum
+const drumTex=canvasTex(1024,512,(g,w,h)=>{const gr=g.createLinearGradient(0,0,0,h);gr.addColorStop(0,"#9cc6cb");gr.addColorStop(.5,"#5f9a9c");gr.addColorStop(1,"#3f7476");g.fillStyle=gr;g.fillRect(0,0,w,h);
+  for(let i=0;i<14;i++){g.fillStyle=`rgba(255,255,255,${.06+.06*(i%3)})`;g.beginPath();g.ellipse((i*137)%w,(i*61)%h,90,30,0,0,Math.PI*2);g.fill();}
+  const cols=16,rows=6;for(let j=0;j<rows;j++)for(let i=0;i<cols;i++){if((i*7+j*3)%5===0){g.fillStyle="rgba(230,240,238,.35)";g.fillRect(i*w/cols+4,j*h/rows+6,w/cols-8,h/rows-12);}}
+  g.strokeStyle="rgba(225,235,235,.85)";g.lineWidth=4;for(let j=0;j<=rows;j++){g.beginPath();g.moveTo(0,j*h/rows);g.lineTo(w,j*h/rows);g.stroke();}
+  g.lineWidth=2;for(let i=0;i<=cols;i++){g.beginPath();g.moveTo(i*w/cols,0);g.lineTo(i*w/cols,h);g.stroke();}});
+drumTex.wrapS=THREE.RepeatWrapping; drumTex.repeat.x=4;
+const drumLit=canvasTex(1024,512,(g,w,h)=>{g.fillStyle="#000";g.fillRect(0,0,w,h);const cols=16,rows=6;let r=11;const rnd=()=>((r=(r*9301+49297)%233280)/233280);for(let j=0;j<rows;j++)for(let i=0;i<cols;i++){if(rnd()<.55){g.fillStyle=rnd()<.75?"#ffcf86":"#e6eeff";g.fillRect(i*w/cols+4,j*h/rows+6,w/cols-8,h/rows-12);}}});
+drumLit.wrapS=THREE.RepeatWrapping; drumLit.repeat.x=4;
+const drumMat=std(0xffffff,{map:drumTex,emissive:0xffffff,emissiveMap:drumLit,emissiveIntensity:0,roughness:.18,metalness:.3});
+add(new THREE.CylinderGeometry(6.0,6.0,.55,72),M.dark,0,4.0,RZ);                      // soffit
+add(new THREE.CylinderGeometry(6.0,6.0,3.6,72,1,true),drumMat,0,6.1,RZ);
+add(new THREE.CylinderGeometry(6.08,6.08,.22,72),M.silver,0,7.95,RZ);                   // tier band
+add(new THREE.CylinderGeometry(5.7,5.7,3.9,72,1,true),drumMat,0,9.95,RZ);
+add(new THREE.CylinderGeometry(5.8,5.8,.3,72),M.tile,0,12.05,RZ);                       // roof
+add(new THREE.CylinderGeometry(3.4,3.4,.5,40),M.tile,0,12.45,RZ);
+// vertical fins (instanced)
+function fins(r,y0,h,n){const geo=new THREE.BoxGeometry(.07,h,.36),inst=new THREE.InstancedMesh(geo,M.white,n),o=new THREE.Object3D();
+  for(let k=0;k<n;k++){const a=k/n*Math.PI*2;o.position.set(Math.sin(a)*r,y0+h/2,RZ+Math.cos(a)*r);o.rotation.y=a;o.updateMatrix();inst.setMatrixAt(k,o.matrix);}inst.castShadow=true;scene.add(inst);}
+fins(6.15,4.3,3.6,84); fins(5.85,8.05,3.95,80);
+// entrance: steps, door, sign behind glass
+const DZ=RZ+R0;
+for(let i=0;i<5;i++) box(9.2-i*.2,.6-i*.12,.5,M.stone,0,0,RZ+6.4+i*.5);
+[-4.7,4.7].forEach(x=>{box(.06,.9,2.6,M.railing,x,.6,RZ+7.2);box(.08,.08,2.6,M.silver,x,1.5,RZ+7.2);});
+box(3.4,3.0,.25,M.white,0,.6,DZ+.12);
+box(2.9,2.6,.08,M.door,0,.6,DZ+.3,{cast:false});
+const signTex=canvasTex(1024,320,(g,w,h)=>{g.fillStyle="#f4f2ee";g.fillRect(0,0,w,h);g.fillStyle="rgba(120,115,108,.25)";g.font="22px 'Noto Serif SC',serif";for(let y=24;y<h;y+=30)for(let x=8;x<w;x+=26)if(((x*7+y*3)%11)<6)g.fillText("文",x,y);
+  g.fillStyle="#2a2522";g.font="112px 'Ma Shan Zheng','STKaiti','KaiTi',serif";g.textBaseline="middle";g.fillText("冯契",40,128);g.font="76px 'Ma Shan Zheng','STKaiti','KaiTi',serif";g.fillText("学术成就陈列室",270,128);
+  g.fillStyle="#5a4630";g.fillRect(270,190,620,34);g.fillStyle="#e8d8b8";g.font="500 20px 'Noto Sans SC',sans-serif";g.fillText("The Exhibition of Feng Qi's Academic Achievements",290,208);
+  g.fillStyle="#3f7d4e";for(let x=20;x<w;x+=46){g.beginPath();g.ellipse(x,h-14,26,22,0,0,Math.PI*2);g.fill();}});
+const signMat=std(0xffffff,{map:signTex,emissive:0xffffff,emissiveMap:signTex,emissiveIntensity:.12,roughness:.6});
+box(3.2,1.1,.06,signMat,0,1.2,DZ-.9,{cast:false});
+box(3.4,.06,1.4,M.dark,0,.62,DZ-.4,{cast:false});
+// red name plate on the canopy fascia
+const plateTex=canvasTex(1024,128,(g,w,h)=>{g.fillStyle="#9b1c24";g.fillRect(0,0,w,h);g.fillStyle="#fff";g.font="900 64px 'Noto Sans SC',sans-serif";g.textAlign="center";g.textBaseline="middle";g.fillText("冯契学术成就陈列室",w/2,h/2+4);});
+const plateMat=std(0xffffff,{map:plateTex,emissive:0xffffff,emissiveMap:plateTex,emissiveIntensity:.15,roughness:.5});
+const plate=add(new THREE.BoxGeometry(4.2,.52,.06),plateMat,0,3.05,RZ+7.65); plate.castShadow=false;
+
+// ---- wings & bridges ----
+const winLit=[];
+function facadeTex(seed,lit,bay){return canvasTex(512,512,(g,w,h)=>{let r=seed;const rnd=()=>((r=(r*9301+49297)%233280)/233280);
+  g.fillStyle=lit?"#000":"#e3e4e5";g.fillRect(0,0,w,h);
+  if(!lit){g.strokeStyle="rgba(150,155,160,.55)";g.lineWidth=1.5;for(let x=0;x<w;x+=32){g.beginPath();g.moveTo(x,0);g.lineTo(x,h);g.stroke();}for(let y=0;y<h;y+=32){g.beginPath();g.moveTo(0,y);g.lineTo(w,y);g.stroke();}}
+  const floors=4;for(let f=0;f<floors;f++){const y=h-(f+1)*h/floors+30;for(let i=0;i<5;i++){const x=24+i*98;if(bay&&i===2)continue;
+    if(lit){if(rnd()<.5){g.fillStyle=rnd()<.7?"#ffd08a":"#e1e9ff";g.fillRect(x,y,58,46);}}else{g.fillStyle="#3c4a52";g.fillRect(x,y,58,46);g.fillStyle="#7d9aa3";g.fillRect(x+4,y+4,24,38);}}}
+  if(bay){const x=w/2-40;if(lit){g.fillStyle="#ffd08a";g.globalAlpha=.6;g.fillRect(x,20,80,h-30);g.globalAlpha=1;}else{g.fillStyle="#4f8a86";g.fillRect(x,20,80,h-30);g.strokeStyle="#cfe2df";g.lineWidth=3;for(let y=20;y<h;y+=40){g.beginPath();g.moveTo(x,y);g.lineTo(x+80,y);g.stroke();}g.beginPath();g.moveTo(x+40,20);g.lineTo(x+40,h);g.stroke();}}
+  if(!lit){g.fillStyle="#5d636a";g.fillRect(0,h-26,w,26);}});}
+function wing(x,seed,bay){
+  const W=13,H=12.4,D=11;
+  const fm=std(0xffffff,{map:facadeTex(seed,false,bay),emissive:0xffffff,emissiveMap:facadeTex(seed,true,bay),emissiveIntensity:0,roughness:.75});
+  const sm=std(0xffffff,{map:facadeTex(seed+3,false,false),emissive:0xffffff,emissiveMap:facadeTex(seed+3,true,false),emissiveIntensity:0,roughness:.75});
+  winLit.push(fm,sm);
+  const mesh=new THREE.Mesh(new THREE.BoxGeometry(W,H,D),[sm,sm,M.tile,M.tile,fm,fm]);mesh.position.set(x,H/2,RZ-1.5);mesh.castShadow=mesh.receiveShadow=true;scene.add(mesh);
+  box(W+.3,.3,D+.3,M.tile,x,H,RZ-1.5);
+  [[-3,-1],[3,2]].forEach(([dx,dz])=>box(1.6,.8,1.2,M.silver,x+dx,H+.3,RZ-1.5+dz));
+}
+wing(-15.2,7,false); wing(15.2,21,true);
+// connecting blocks with stacked balconies
+const bridgeGlass=[];
+[-1,1].forEach(s=>{
+  const x=s*7.3;
+  box(3.4,11.2,7,std(0x9aa3aa),x,0,RZ-3.2);
+  for(let f=0;f<4;f++){const y=f*2.9+.1;
+    box(3.6,.22,8.4,M.white,x,y+2.6,RZ-2.6);
+    box(3.6,.9,.05,M.railing,x,y+2.82,RZ+1.55,{cast:false});
+    const gm=std(0x31424a,{roughness:.2,metalness:.3,emissive:0xffcf86,emissiveIntensity:0});bridgeGlass.push(gm);
+    box(3.3,2.2,.06,gm,x,y+.3,RZ+.2);
+  }
+});
+
+// ---- trees (camphor-like clusters) ----
+function tree(x,z,s=1){const g=new THREE.Group();g.position.set(x,0,z);g.scale.setScalar(s);scene.add(g);
+  add(new THREE.CylinderGeometry(.12,.18,1.8,8),M.trunk,0,.9,0,{parent:g});
+  [[0,2.5,0,1.25],[.7,2.2,.3,.9],[-.6,2.3,-.2,.95],[.1,3.1,-.3,.85]].forEach(([a,b,c,r],i)=>add(new THREE.IcosahedronGeometry(r,1),i%2?M.leaf2:M.leaf,a,b,c,{parent:g}));}
+[[-22,RZ+10],[-25,RZ+15],[22,RZ+10],[25,RZ+15],[-11,RZ+21.5],[11,RZ+21.5],[-28,RZ-6],[28,RZ-6],[-20,RZ+19],[20,RZ+19]].forEach(([x,z],i)=>tree(x,z,1+(i%3)*.12));
+// shrubs along the entrance steps, as in the photo
+for(let i=-4;i<=4;i++) if(Math.abs(i)>1) add(new THREE.SphereGeometry(.42,10,8),M.leaf2,i*1.05,.72,RZ+5.95).scale.set(1,.7,1);
+
+// ---- lamps ----
+const lampLights=[];
+[-9,9,-17,17].forEach((x,i)=>{box(.1,3.4,.1,M.dark,x,.06,RZ+11);add(new THREE.CylinderGeometry(.3,.12,.18,14),M.dark,x,3.5,RZ+11);add(new THREE.SphereGeometry(.14,10,8),M.bulb,x,3.36,RZ+11);
+  if(i<2){const l=new THREE.PointLight(0xffc977,0,11,1.6);l.position.set(x,3.2,RZ+11);scene.add(l);lampLights.push(l);}});
+
+// ---- bicycles (parked + riding) ----
+const wheelGeo=new THREE.TorusGeometry(.32,.035,6,18);
+function bike(color){const g=new THREE.Group();const fm=std(color);
+  [-.5,.5].forEach(dx=>add(wheelGeo,M.dark,dx,.34,0,{parent:g}));
+  const bar=box(1,.05,.05,fm,0,.55,0,{parent:g});bar.rotation.z=.12;
+  box(.05,.45,.05,fm,-.25,.35,0,{parent:g});box(.05,.5,.05,fm,.42,.4,0,{parent:g});box(.05,.05,.4,M.dark,.42,.9,0,{parent:g});
+  scene.add(g);return g;}
+const parkCols=[0x2f6db5,0xb83a3a,0x2e8a62,0xd9a12b,0x6a6f78];
+for(let i=0;i<6;i++){const b=bike(parkCols[i%5]);b.position.set(-18+i*.55,0,RZ+6.2);b.rotation.y=Math.PI/2-.35;}
+for(let i=0;i<5;i++){const b=bike(parkCols[(i+2)%5]);b.position.set(16+i*.55,0,RZ+6.2);b.rotation.y=Math.PI/2+.35;}
+function rider(color){const g=bike(color);const body=std(0x30343c);box(.3,.55,.28,body,-.05,.95,0,{parent:g});add(new THREE.SphereGeometry(.14,10,8),std(0xe2c6a8),-.02,1.65,0,{parent:g});return g;}
+const r1=rider(0x2f6db5),r2=rider(0xb83a3a); r2.rotation.y=Math.PI;
+const ride={a:-30,b:18};
+
+// ---- drifting clouds ----
+const clouds=[];
+for(let i=0;i<6;i++){const g=new THREE.Group();for(let k=0;k<5;k++){const m=new THREE.Mesh(new THREE.SphereGeometry(1.6+Math.random()*1.4,12,10),M.cloud);m.position.set(k*1.9-4,Math.random()*.8,Math.random()*1.6);m.scale.y=.55;g.add(m);}
+  g.position.set(-40+i*15,22+(i%3)*3,-18+(i%2)*12);scene.add(g);clouds.push(g);}
+
+const grid=new THREE.GridHelper(160,80,0x7e8796,0x8f97a3);grid.position.y=-1.3;grid.material.transparent=true;grid.material.opacity=.25;scene.add(grid);
+
+// ---- labels ----
+const HOT=[
+  {t:"冯契学术成就陈列室",p:[0,3.0,RZ+7.8],main:1,go:"hall"},
+  {t:"玻璃圆楼",p:[0,13.2,RZ],view:1},
+  {t:"入口台阶",p:[3.8,1.1,RZ+8.4],view:2},
+  {t:"侧翼连廊",p:[-7.3,9.6,RZ+1.4],view:3}
+];
+const ui=$("stageUi");
+HOT.forEach(h=>{const b=document.createElement("button");b.type="button";b.className="hotspot"+(h.main?" main":"");b.textContent=h.t;b.onclick=()=>h.go?enter(h.go):setView(h.view);ui.appendChild(b);h.el=b;});
+const v3=new THREE.Vector3();
+function placeLabels(){const w=renderer.domElement.clientWidth,h=renderer.domElement.clientHeight,hide=mode!=="idle";
+  HOT.forEach(o=>{v3.set(...o.p).project(camera);const off=hide||v3.z>1||Math.abs(v3.x)>1.05||Math.abs(v3.y)>1.05;o.el.dataset.off=off?"1":"0";o.el.style.left=((v3.x+1)/2*w)+"px";o.el.style.top=((1-v3.y)/2*h)+"px";});}
+
+// ---- night ----
+let night=false;
+function setNight(n){night=n;stage.classList.toggle("night",n);$("tNight").setAttribute("aria-pressed",n);
+  hemi.intensity=n?.3:1.15; hemi.color.set(n?0x6d82b8:0xe4ecf7); sun.intensity=n?.3:2.2; sun.color.set(n?0x9fb4ff:0xfff3e2);
+  winLit.forEach(m=>m.emissiveIntensity=n?1.1:0); drumMat.emissiveIntensity=n?1.2:0; lobbyMat.emissiveIntensity=n?.9:0; bridgeGlass.forEach(m=>m.emissiveIntensity=n?.7:0);
+  M.bulb.emissiveIntensity=n?2.2:0; signMat.emissiveIntensity=n?.9:.12; plateMat.emissiveIntensity=n?.8:.15; innerGlow.intensity=n?18:0;
+  lampLights.forEach(l=>l.intensity=n?7:0); M.cloud.opacity=n?.12:.85;}
+$("tNight").onclick=()=>setNight(!night);
+$("tRotate").onclick=()=>{controls.autoRotate=!controls.autoRotate;$("tRotate").setAttribute("aria-pressed",controls.autoRotate);};
+const dolly=f=>{const off=camera.position.clone().sub(controls.target);const len=THREE.MathUtils.clamp(off.length()*f,controls.minDistance,controls.maxDistance);fly(controls.target.clone().add(off.setLength(len)),controls.target.clone(),reduce?0:450);};
+$("tIn").onclick=()=>dolly(.78);$("tOut").onclick=()=>dolly(1.28);$("tReset").onclick=()=>setView(0);
+document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>setView(+b.dataset.view));
+function setView(i){document.querySelectorAll("[data-view]").forEach(b=>b.setAttribute("aria-pressed",+b.dataset.view===i));const v=VIEWS[i];fly(new THREE.Vector3(...v.p),new THREE.Vector3(...v.t),reduce?0:1300);}
+if(document.fonts){Promise.all([document.fonts.load("80px 'Ma Shan Zheng'","冯契学术成就陈列室"),document.fonts.load("900 64px 'Noto Sans SC'","冯契学术成就陈列室")]).catch(()=>{}).then(()=>document.fonts.ready).then(()=>{signTex.userData.redraw();plateTex.userData.redraw();});}
+
+// ---- camera tween ----
+let tw=null;
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+function fly(p,t,dur){if(tw)tw.done();return new Promise(res=>{if(!dur){camera.position.copy(p);controls.target.copy(t);res();return;}
+  tw={p0:camera.position.clone(),t0:controls.target.clone(),p1:p,t1:t,s:performance.now(),dur,done(){camera.position.copy(p);controls.target.copy(t);tw=null;res();}};});}
+
+// ---- immersive journey: approach the rotunda → through the glass doors → into the zone ----
+let mode="idle", token=0;
+const setStep=n=>document.querySelectorAll("#journey li").forEach(li=>{const s=+li.dataset.s;li.className=s===n?"now":s<n?"done":"";});
+const kick=()=>{$("hudKicker").textContent="实景展区 · "+($("hudKicker").dataset.tag||"");};
+window.onZone=()=>{if(mode==="inside")kick();};
+async function enter(id){
+  const my=++token; window.Viewer.setZone(id);
+  if(mode==="inside"){return;}
+  mode="journey"; document.body.classList.add("is-immersive"); stage.classList.add("immersive"); hud.classList.add("on");
+  $("viewer").classList.remove("on"); $("journey").hidden=false; $("hudKicker").textContent="走进陈列室"; resize();
+  controls.enabled=false; const wasRotate=controls.autoRotate; controls.autoRotate=false; stage.dataset.rot=wasRotate?"1":"";
+  const d=reduce?0:1;
+  setStep(1); await fly(new THREE.Vector3(3.5,2.3,RZ+21),new THREE.Vector3(0,4.6,RZ),1700*d); if(my!==token)return;
+  if(id==="exterior"){ fade.classList.add("on"); await wait(reduce?0:450); if(my!==token)return; setStep(3); inside(); return; }
+  setStep(2); await fly(new THREE.Vector3(0,1.9,RZ+9.5),new THREE.Vector3(0,1.7,DZ-2),1100*d); if(my!==token)return;
+  await fly(new THREE.Vector3(0,1.75,RZ+6.6),new THREE.Vector3(0,1.6,DZ-2),900*d); if(my!==token)return;
+  await fly(new THREE.Vector3(0,1.7,DZ+.9),new THREE.Vector3(0,1.7,DZ-2),700*d); if(my!==token)return;
+  fade.classList.add("on"); await wait(reduce?0:450); if(my!==token)return;
+  setStep(3); inside();
+}
+function inside(){mode="inside";hud.classList.add("inside");$("journey").hidden=true;kick();
+  $("viewer").classList.add("on");fade.classList.remove("on");$("frame").focus({preventScroll:true});}
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+$("skip").onclick=()=>{const my=++token;if(tw)tw.done();fade.classList.add("on");setTimeout(()=>{if(my===token){setStep(3);inside();}},reduce?0:250);};
+async function leave(){
+  const my=++token; if(tw)tw.done(); $("viewer").classList.remove("on"); $("journey").hidden=true; hud.classList.remove("inside"); mode="returning";
+  const v=VIEWS[0]; await fly(new THREE.Vector3(...v.p),new THREE.Vector3(...v.t),reduce?0:1500); if(my!==token)return;
+  mode="idle"; hud.classList.remove("on"); stage.classList.remove("immersive"); document.body.classList.remove("is-immersive");
+  controls.enabled=true; controls.autoRotate=!!stage.dataset.rot; resize();
+  document.querySelectorAll("[data-view]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.view==="0"));
+}
+$("leave").onclick=leave;
+document.addEventListener("click",e=>{const b=e.target.closest("[data-enter]");if(b)enter(b.dataset.enter);const g=e.target.closest("[data-go]");if(g){window.Viewer.setZone(g.dataset.go);if(mode!=="inside"&&mode!=="journey")enter(g.dataset.go);}});
+document.addEventListener("keydown",e=>{if(mode==="idle")return;if(e.key==="Escape"){e.preventDefault();leave();}
+  if(mode==="inside"&&!window.Viewer.zoom){if(e.key==="ArrowRight")window.Viewer.step(1);if(e.key==="ArrowLeft")window.Viewer.step(-1);}});
+
+// ---- resize + loop ----
+function resize(){const w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=w<640?50:38;camera.updateProjectionMatrix();}
+new ResizeObserver(resize).observe(stage); resize();
+$("loading").remove();
+let last=performance.now();
+renderer.setAnimationLoop(now=>{
+  const dt=Math.min(.05,(now-last)/1000);last=now;
+  if(tw){const k=Math.min(1,(now-tw.s)/tw.dur),e=ease(k);camera.position.lerpVectors(tw.p0,tw.p1,e);controls.target.lerpVectors(tw.t0,tw.t1,e);if(k>=1)tw.done();}
+  else if(mode==="inside"){const a=now*.00005;camera.position.set(Math.sin(a)*38,20,Math.cos(a)*38);controls.target.set(0,5,0);}
+  if(!reduce){
+    ride.a+=dt*2.6; if(ride.a>30)ride.a=-30; r1.position.set(ride.a,0,RZ+19.8);
+    ride.b-=dt*2.1; if(ride.b<-30)ride.b=30; r2.position.set(ride.b,0,RZ+21.2);
+    clouds.forEach((c,i)=>{c.position.x+=dt*(.5+i*.08); if(c.position.x>48)c.position.x=-48;});
+  }
+  controls.update(); renderer.render(scene,camera); placeLabels();
+});
+}
+</script>
+
+</body>
+</html>
